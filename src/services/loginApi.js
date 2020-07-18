@@ -10,7 +10,7 @@ const getToken = async () => {
         });
         token = await res.data.token;
 
-        const instance = axios.create();
+        // adds the token as a global variable in all the headers of every call
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } catch (err) {
         console.error(err);

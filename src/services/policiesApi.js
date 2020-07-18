@@ -3,21 +3,16 @@ const urlApi = require("../utils/helpers");
 const loginApi = require("./loginApi");
 
 
-const policiesApi = async() => {
+const getPolicies = async () => {
     try {
         await loginApi.getToken;
-        const getPolicies = async () => {
-            try {
-                const res = await axios.get(`${urlApi.URL_API}/policies`);
-                console.log(res.data);
-            } catch (err) {
-                console.error(err);
-            }
-        };
-        await getPolicies();
+        const res = await axios.get(`${urlApi.URL_API}/policies`);
+        const data = await res.data;
+        return data;
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 };
 
-exports.getPolicies = policiesApi();
+
+exports.getPolicies = getPolicies();
