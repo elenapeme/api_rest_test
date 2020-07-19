@@ -1,18 +1,21 @@
 const Clients = require("../services/clientsApi");
+const Policies = require("../services/policiesApi");
 
 exports.clients_list = (async (req, res) => {
     try {
         const clientsList = await Clients.getClients;
+        const policiesList = await Policies.getPolicies;
 
         //added policies in each client
-        //TODO
         for (const client of clientsList) {
-            const clientPolicies = contracts.filter(c=>c.clientId===client.id);
+            const clientPolicies = policiesList.filter(c=>c.clientId===client.id);
             if(clientPolicies.length)
-                client.contracts = Object.fromEntries(
-                    clientPolicies.map(({id, clientId, ...data}) => [id, data]))
+                client.policies = Object.fromEntries(
+                    await clientPolicies.map((
+                        {id, clientId, ...data}) => [id, data]
+                    ));
         }
-
+        
         // pagination
         const clientsCount = clientsList.length;
         const pageCount = Math.ceil(clientsCount / 10);
@@ -25,6 +28,7 @@ exports.clients_list = (async (req, res) => {
         }
 
         // send the JSON with the pagination applied
+        //res.send(await clientsList.slice(page * 10 - 10 , page * 10));
         res.send(await clientsList.slice(page * 10 - 10 , page * 10));
     } catch {
         res.status(500).send()
