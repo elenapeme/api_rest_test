@@ -1,8 +1,9 @@
-####SUMMARY
+
+#### SUMMARY
 
 This is a REST API that connects to a 3rd party API.
 
-####INSTALLATION
+#### INSTALLATION
 
 All, after cloning the repository, you should write the following command:
 ```
