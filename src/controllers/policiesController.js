@@ -12,21 +12,22 @@ exports.policies_list = (async (req, res, next) => {
     if (page > pageCount) {
         page = pageCount
     }
-    console.log(await policiesList);
+
     // send the JSON with the pagination applied
-    //res.send(await policiesList.slice(page * 10 - 10 , page * 10));
-    res.send(await policiesList);
+    res.send(await policiesList.slice(page * 10 - 10 , page * 10));
 });
 
 exports.policies_id = (async (req, res) => {
     try {
         const policiesList = await Policies.getPolicies;
+
+        //find an id in the policies list
         const findPoliciesId = await policiesList.filter((e) => {
             return e.id === req.params.id;
         });
 
         if (findPoliciesId.length !== 0 ) {
-            res.end(await JSON.stringify(findPoliciesId));
+            res.json(findPoliciesId);
         } else {
             res.send({
                 "code": "404",
@@ -35,14 +36,9 @@ exports.policies_id = (async (req, res) => {
         }
 
     } catch (err) {
-        res.status(500).send()
-    }
-});
-
-exports.policies_list2 = (async (req, res,  next) => {
-    try {
-
-    } catch {
-
+        res.send({
+            "code": "400",
+            "message": "Bad request"
+        })
     }
 });

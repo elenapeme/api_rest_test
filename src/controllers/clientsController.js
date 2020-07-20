@@ -1,6 +1,5 @@
 const Clients = require("../services/clientsApi");
 const Policies = require("../services/policiesApi");
-const Auth = require("../utils/authHeader");
 
 exports.clients_list = (async (req, res) => {
     try {
@@ -30,7 +29,10 @@ exports.clients_list = (async (req, res) => {
         // send the JSON with the pagination applied
         await res.json(clientsList.slice(page * 10 - 10 , page * 10));
     } catch {
-        res.status(500).send()
+        res.send({
+            "code": "401",
+            "message": "Unauthorized error"
+        })
     }
 });
 
@@ -49,7 +51,10 @@ exports.client_id = (async (req, res) => {
             })
         }
     } catch (err) {
-        res.status(500).send()
+        res.send({
+            "code": "400",
+            "message": "Bad request"
+        })
     }
 });
 
@@ -67,6 +72,8 @@ exports.client_policies = (async (req, res) => {
                         {id, clientId, email, ...data}) => [id, data]
                     ));
         }
+
+        //find an id in the clients list
         const findClientId = await clientsList.filter((e) => {
             return e.id === req.params.id;
         });
@@ -79,6 +86,9 @@ exports.client_policies = (async (req, res) => {
             })
         }
     } catch {
-
+        res.send({
+            "code": "400",
+            "message": "Bad request"
+        })
     }
 });

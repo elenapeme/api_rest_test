@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 // variable to save token for the next tests
 let token ;
 
-describe('3rd party API functionality',()=>{
+describe('3rd party API functionality', () => {
     it('should take the token to login', (done) => {
         chai.request(urlApi.URL_API)
             .post('/login')

@@ -39,10 +39,16 @@ exports.auth_user = (async (req, res) => {
             await res.json(accessToken);
 
         } else {
-            res.send('Username or password incorrect');
+            res.send({
+                "code": "401",
+                "message": "Unauthorized error"
+            })
         }
 
     } catch (err) {
-        res.send(err);
+        res.send({
+            "code": "400",
+            "message": "Bad request"
+        })
     }
 });
