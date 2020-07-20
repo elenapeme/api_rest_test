@@ -1,5 +1,5 @@
 const axios = require("axios");
-const urlApi = require("../utils/helpers");
+const urlApi = require("../utils/config");
 
 const getToken = async () => {
     let token;

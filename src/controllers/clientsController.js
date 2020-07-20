@@ -1,5 +1,6 @@
 const Clients = require("../services/clientsApi");
 const Policies = require("../services/policiesApi");
+const Auth = require("../utils/authHeader");
 
 exports.clients_list = (async (req, res) => {
     try {
@@ -12,10 +13,9 @@ exports.clients_list = (async (req, res) => {
             if(clientPolicies.length)
                 client.policies = Object.fromEntries(
                     await clientPolicies.map((
-                        {id, clientId, ...data}) => [id, data]
+                        {id, clientId, email, ...data}) => [id, data]
                     ));
         }
-        
         // pagination
         const clientsCount = clientsList.length;
         const pageCount = Math.ceil(clientsCount / 10);
@@ -28,8 +28,7 @@ exports.clients_list = (async (req, res) => {
         }
 
         // send the JSON with the pagination applied
-        //res.send(await clientsList.slice(page * 10 - 10 , page * 10));
-        res.send(await clientsList.slice(page * 10 - 10 , page * 10));
+        await res.json(clientsList.slice(page * 10 - 10 , page * 10));
     } catch {
         res.status(500).send()
     }
@@ -49,9 +48,37 @@ exports.client_id = (async (req, res) => {
                 "message": "This id does not exist"
             })
         }
-
-
     } catch (err) {
         res.status(500).send()
+    }
+});
+
+exports.client_policies = (async (req, res) => {
+    try {
+        const clientsList = await Clients.getClients;
+        const policiesList = await Policies.getPolicies;
+
+        //added policies in each client
+        for (const client of clientsList) {
+            const clientPolicies = policiesList.filter(c=>c.clientId===client.id);
+            if(clientPolicies.length)
+                client.policies = Object.fromEntries(
+                    await clientPolicies.map((
+                        {id, clientId, email, ...data}) => [id, data]
+                    ));
+        }
+        const findClientId = await clientsList.filter((e) => {
+            return e.id === req.params.id;
+        });
+        if (findClientId !== 0) {
+            res.json(findClientId)
+        } else {
+            res.send({
+                "code": "404",
+                "message": "This id does not exist"
+            })
+        }
+    } catch {
+
     }
 });

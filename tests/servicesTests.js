@@ -1,4 +1,4 @@
-const urlApi = require("../src/utils/helpers");
+const urlApi = require("../src/utils/config");
 const mocha = require("mocha");
 const describe = mocha.describe;
 const it = mocha.it;

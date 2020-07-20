@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-// Controller modules
+// auth header
+const header_auth = require("../utils/authHeader");
+
+// Controller module
 const clients_controller = require("../controllers/clientsController");
 
 router.get('/', function (req, res) {
@@ -9,13 +12,15 @@ router.get('/', function (req, res) {
 });
 
 // admin route
-router.get('/clients', clients_controller.clients_list);
+router.get('/clients', header_auth.authHeader, clients_controller.clients_list);
 
 // client route
 router.get('/clients2', clients_controller.clients_list);
 
 // client id route
-router.get("/clients/:id", clients_controller.client_id);
+router.get("/clients/:id", header_auth.authHeader, clients_controller.client_id);
+
+router.get("/clients/:id/policies", clients_controller.client_policies);
 
 //Exporting routers
 module.exports = router;

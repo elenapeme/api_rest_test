@@ -1,19 +1,21 @@
 const express = require('express');
 const app = express();
-const paginate = require('express-paginate');
+const bodyParser = require("body-parser");
 
 // Import routes
 const clientsRoutes = require("./src/routes/clientsRoutes");
 const policiesRoutes = require("./src/routes/policiesRoutes");
+const authRoute = require("./src/routes/authRoute");
 
 const port = 8080;
-
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(paginate.middleware(10, 10));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 // Routes Middleware
-app.use('/', clientsRoutes);
-app.use('/', policiesRoutes);
+app.use('/api', clientsRoutes);
+app.use('/api', policiesRoutes);
+app.use('/api', authRoute);
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
