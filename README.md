@@ -1,11 +1,11 @@
 
 #### SUMMARY
 
-This is a REST API that connects to a 3rd party API.
+This is a REST API that connects to the INSURANCE API REST. I tried to make it as modular as I could. There are three main folders: services, controllers, and routes. I separated those files in order to separate the business logic from the consumption of the API itself. In services, there are the files that extract data from the INSURANCE API REST while in controllers, there are the files that manipulate that data to, finally, send it through the routes. 
 
 #### INSTALLATION
 
-All, after cloning the repository, you should write the following command:
+After cloning the repository, you should write the following command:
 ```
 npm install
 ```
@@ -52,7 +52,7 @@ GET /API/POLICIES/:ID
 
 
 #### TO DO
-Sadly, for this specific amount of time, I still have things I need to finish.
+Sadly, for this specific amount of time, there are points that needs to still be finished:
 
 - JWT role based authentication
 - End to end test
