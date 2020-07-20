@@ -50,7 +50,8 @@ Getting the policies of a specific client:
 GET /API/POLICIES/:ID
 ```
 
-####TO DO
+
+#### TO DO
 Sadly, for this specific amount of time, I still have things I need to finish.
 
 - JWT role based authentication
