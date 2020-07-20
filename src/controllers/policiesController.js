@@ -1,6 +1,7 @@
 const Policies = require("../services/policiesApi");
 
 exports.policies_list = (async (req, res, next) => {
+    
     // pagination
     const policiesList = await Policies.getPolicies;
     const policiesCount = policiesList.length;

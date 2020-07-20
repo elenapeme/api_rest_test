@@ -24,7 +24,7 @@ const getUsers = async() => {
 exports.auth_user = (async (req, res) => {
     try {
         await getUsers();
-        console.log(users);
+
         // Read username and password from request body
         const username = await req.body.username;
         const password = await req.body.password;
@@ -35,7 +35,6 @@ exports.auth_user = (async (req, res) => {
         if (await user) {
             // Generate an access token
             const accessToken = await jwt.sign({ username: user.username,  role: user.role }, token.SECRET_TOKEN, { expiresIn: '1 day' });
-            console.log("token", accessToken);
             await res.json(accessToken);
 
         } else {

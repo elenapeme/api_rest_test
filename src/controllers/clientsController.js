@@ -15,6 +15,7 @@ exports.clients_list = (async (req, res) => {
                         {id, clientId, email, ...data}) => [id, data]
                     ));
         }
+
         // pagination
         const clientsCount = clientsList.length;
         const pageCount = Math.ceil(clientsCount / 10);
